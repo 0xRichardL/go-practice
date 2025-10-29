@@ -2,18 +2,18 @@ package main
 
 import "fmt"
 
-func isRepeated(s string, l, r int) bool {
+func isRepeated(s string, l, r int) (bool, int) {
 	if len(s) < 1 {
-		return false
+		return false, -1
 	}
-	m := make(map[byte]bool)
+	m := make(map[byte]int)
 	for i := l; i < r; i++ {
-		if m[s[i]] {
-			return true
+		if p, ok := m[s[i]]; ok {
+			return true, p
 		}
-		m[s[i]] = true
+		m[s[i]] = i
 	}
-	return false
+	return false, -1
 }
 
 func lengthOfLongestSubstring(s string) int {
@@ -22,14 +22,17 @@ func lengthOfLongestSubstring(s string) int {
 	}
 	wsize := 1
 	max := 0
+	j := 0
 	for wsize <= len(s) {
-		i := 0
+		i := j
 		for (i + wsize) <= len(s) {
-			if !isRepeated(s, i, i+wsize) {
+			repeated, pos := isRepeated(s, i, i+wsize)
+			if !repeated {
+				j = i
 				max = wsize
 				break
 			}
-			i++
+			i = pos + 1
 		}
 		wsize++
 	}
