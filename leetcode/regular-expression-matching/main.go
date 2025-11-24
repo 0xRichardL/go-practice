@@ -1,111 +1,58 @@
 package main
 
-import "fmt"
-
-const (
-	Exact = iota
-	More
+import (
+	"fmt"
 )
 
-func isMatch(s string, p string) bool {
-	// Build regex groups.
-	type RegexGroup struct {
-		Type  int
-		Value string
+// 212ms | Beats 15.50%
+func dfs(s, p string, i, j int) bool {
+	// fmt.Printf("%d, %d -> ", i, j)
+	if i >= len(s) && j >= len(p) {
+		return true
 	}
-	rgs := make([]RegexGroup, 0)
-	j := 0
-	for i, r := range p {
-		if r == '*' {
-			if j < i-1 {
-				rgs = append(rgs, RegexGroup{
-					Type:  Exact,
-					Value: p[j : i-1],
-				})
-			}
-			rgs = append(rgs, RegexGroup{
-				Type:  More,
-				Value: p[i-1 : i+1],
-			})
-			j = i + 1
-		}
-	}
-	if j < len(p) {
-		rgs = append(rgs, RegexGroup{
-			Type:  Exact,
-			Value: p[j:],
-		})
-	}
-	// fmt.Println(rgs)
-	// Construct dynamic programming 2D table.
-	d := make([][]bool, len(rgs))
-	for i := range d {
-		d[i] = make([]bool, len(s))
-	}
-	for i, rg := range rgs {
-		if rg.Type == Exact {
-			if len(rg.Value) > len(s) {
-				return false
-			}
-			j := 0
-			end := len(s) - len(rg.Value) + 1
-			if i == 0 {
-				end = 1
-			}
-			if i == len(rgs)-1 {
-				j = len(s) - len(rg.Value)
-			}
-			for ; j < end; j++ {
-				rgm := true
-				for k, r := range rg.Value {
-					if r == '.' {
-						continue
-					}
-					if r != rune(s[j+k]) {
-						rgm = false
-						break
-					}
-				}
-				if rgm {
-					for k := j; k < j+len(rg.Value); k++ {
-						d[i][k] = true
-					}
-				}
-			}
-			continue
-		}
-		if rg.Value[0] == '.' {
-			for j := range s {
-				d[i][j] = true
-			}
-			continue
-		}
-		for j, r := range s {
-			if rune(rg.Value[0]) == r {
-				d[i][j] = true
-			}
-		}
-	}
-	// fmt.Println(d)
-	i := len(rgs) - 1
-	j = len(s) - 1
-	if d[i][j] == false {
+	if j >= len(p) {
 		return false
 	}
-	for i >= 0 {
-		// fmt.Println(i, ":", j)
-		if j > 0 && i > 0 && d[i-1][j-1] {
-			j--
-			i--
-			continue
-		}
-		if j > 0 && d[i][j-1] {
-			j--
-		} else {
-			break
+	match := i < len(s) && (p[j] == '.' || p[j] == s[i])
+	if j < len(p)-1 && p[j+1] == '*' {
+		return match && dfs(s, p, i+1, j) || dfs(s, p, i, j+2)
+	}
+	return match && dfs(s, p, i+1, j+1)
+}
+
+// 0ms | Beats 100.0%
+func dpf(s, p string) bool {
+	n := len(s)
+	m := len(p)
+	dp := make([][]bool, n+1)
+	for i := range dp {
+		dp[i] = make([]bool, m+1)
+	}
+	dp[0][0] = true
+	for j := 2; j <= m; j++ {
+		if p[j-1] == '*' {
+			dp[0][j] = dp[0][j-2]
 		}
 	}
-	return j == 0
+	for i := 1; i <= n; i++ {
+		for j := 1; j <= m; j++ {
+			if p[j-1] == '.' || s[i-1] == p[j-1] {
+				dp[i][j] = dp[i-1][j-1]
+			}
+			if p[j-1] == '*' {
+				zeroM := dp[i][j-2]
+				prepM := s[i-1] == p[j-2] || p[j-2] == '.'
+				moreM := dp[i-1][j]
+				dp[i][j] = zeroM || (prepM && moreM)
+			}
+		}
+	}
+	return dp[n][m]
+}
+
+func isMatch(s string, p string) bool {
+	// return dfs(s, p, 0, 0)
+	return dpf(s, p)
 }
 
 func main() {
@@ -114,14 +61,17 @@ func main() {
 		expected bool
 	}
 	tests := []TestCase{
-		// {[]string{"aaaaaaa", "aaaaaaa"}, true},
-		// {[]string{"aaaaaaa", "a*"}, true},
-		// {[]string{"aaaaaaa", "a.aaaaa"}, true},
-		// {[]string{"aaaaaaa", "a.aaaa"}, false},
-		// {[]string{"aab", "c*a*b"}, true},
-		// {[]string{"ab", ".*c"}, false},
+		{[]string{"aaaaaaa", "aaaaaaa"}, true},
+		{[]string{"aaaaaaa", "a*"}, true},
+		{[]string{"aaaaaaa", "a.aaaaa"}, true},
+		{[]string{"aaaaaaa", "a.aaaa"}, false},
+		{[]string{"aab", "c*a*b"}, true},
+		{[]string{"ab", ".*c"}, false},
 		{[]string{"aa", "aaa"}, false},
-		{[]string{"aaa", "ab*ac*a"}, false},
+		{[]string{"aaa", "ab*ac*a"}, true},
+		{[]string{"aaa", "ab*ac*c"}, false},
+		{[]string{"mississippi", "mis*is*p*."}, false},
+		{[]string{"ssippp", "s*p*"}, false},
 	}
 	for _, test := range tests {
 		fmt.Println(test.input)
