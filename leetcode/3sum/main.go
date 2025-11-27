@@ -6,30 +6,35 @@ import (
 )
 
 func threeSum(nums []int) [][]int {
+	sort.Ints(nums)
+	fmt.Println(nums)
 	n := len(nums)
-	ahead := []map[int]bool{make(map[int]bool), make(map[int]bool)}
-	for i := 1; i < n; i++ {
-		ahead = append(ahead, make(map[int]bool))
-		for j := i + 1; j < n; j++ {
-			if _, ok := ahead[i][nums[j]]; ok {
-				ahead[i][nums[j]] = false
-			}
-			ahead[i][nums[j]] = true
+	res := make([][]int, 0)
+	unique := make(map[[3]int]bool)
+	addRes := func(n1, n2, n3 int) {
+		arr := []int{n1, n2, n3}
+		sort.Ints(arr)
+		if _, ok := unique[[3]int{n1, n2, n3}]; !ok {
+			res = append(res, arr)
+			unique[[3]int{n1, n2, n3}] = true
 		}
 	}
-	d := make(map[string]bool)
-	res := [][]int{}
-	for i := 0; i < n; i++ {
-		for j := i + 1; j < n; j++ {
-			s := nums[i] + nums[j]
-			if ahead[j][-s] {
-				arr := []int{nums[i], nums[j], -s}
-				sort.Ints(arr)
-				key := fmt.Sprint(arr)
-				if !d[key] {
-					res = append(res, arr)
-				}
-				d[key] = true
+	for i := 0; i < n-2; i++ {
+		l, r := i+1, n-1
+		for l < r {
+			fmt.Println(nums[i], nums[l], nums[r])
+			fmt.Println(nums[i]+nums[l], nums[r])
+			if nums[i]+nums[l]+nums[r] == 0 {
+				addRes(nums[i], nums[l], nums[r])
+			}
+			abs := nums[i] + nums[l]
+			if abs < 0 {
+				abs = -abs
+			}
+			if nums[r] > abs {
+				r--
+			} else {
+				l++
 			}
 		}
 	}
@@ -42,7 +47,14 @@ func main() {
 		Expected [][]int
 	}
 	tests := []Test{
-		{[]int{-1, 0, 1, 2, -1, -4}, [][]int{{-1, -1, 2}, {-1, 0, 1}}},
+		{
+			[]int{-1, 0, 1, 2, -1, -4},
+			[][]int{{-1, -1, 2}, {-1, 0, 1}},
+		},
+		{
+			[]int{-100, -70, -60, 110, 120, 130, 160},
+			[][]int{{-100, -60, 160}, {-70, -60, 130}},
+		},
 	}
 	for _, test := range tests {
 		output := threeSum(test.Input)
