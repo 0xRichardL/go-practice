@@ -8,24 +8,24 @@ after time away.
 ### Syntax & Basics
 
 - [x] Variables, constants, short declarations (`:=`)
-- [ ] Primitive data types
-- [ ] `iota`
-- [ ] All `for` loop variants
-- [ ] `if`, `switch`, type switch
-- [ ] `defer`, `panic`, `recover`
+- [x] Primitive data types
+- [x] `iota`
+- [x] All `for` loop variants
+- [x] `if`, `switch`, type switch
+- [x] `defer`, `panic`, `recover`
 
 ### Functions
 
-- [ ] Named return values
-- [ ] Variadic functions
-- [ ] Anonymous functions
-- [ ] Higher-order functions
+- [x] Named return values
+- [x] Variadic functions
+- [x] Anonymous functions
+- [x] Higher-order functions
 
 ### Error Handling
 
-- [ ] Custom error types
-- [ ] Wrapping errors (`fmt.Errorf("%w")`)
-- [ ] Checking errors (`errors.Is`, `errors.As`)
+- [x] Custom error types
+- [x] Wrapping errors (`fmt.Errorf("%w")`)
+- [x] Checking errors (`errors.Is`, `errors.As`)
 
 ### Mini Tasks
 
@@ -37,30 +37,30 @@ after time away.
 
 ### Goroutines
 
-- [ ] Understand G--M--P scheduler
-- [ ] Launch goroutines (`go func() {}`)
-- [ ] Identify/fix goroutine leaks
+- [x] Understand G--M--P scheduler
+- [x] Launch goroutines (`go func() {}`)
+- [x] Identify/fix goroutine leaks
 
 ### Channels
 
-- [ ] Unbuffered channels
-- [ ] Buffered channels
-- [ ] Directional channels (`<-chan`, `chan<-`)
-- [ ] Closing channels correctly
-- [ ] Timeouts with `select` + `time.After`
+- [x] Unbuffered channels
+- [x] Buffered channels
+- [x] Directional channels (`<-chan`, `chan<-`)
+- [x] Closing channels correctly
+- [x] Timeouts with `select` + `time.After`
 
 ### Concurrency Patterns
 
-- [ ] Worker pool
-- [ ] Fan-in / Fan-out
+- [x] Worker pool
+- [x] Fan-in / Fan-out
 - [ ] Context cancellation
 - [ ] Rate limiting (ticker)
 
 ### Sync Primitives
 
 - [ ] RWMutex, Mutex
-- [ ] WaitGroup
-- [ ] Once
+- [x] WaitGroup
+- [x] Once
 
 ### Mini Tasks
 
@@ -72,15 +72,15 @@ after time away.
 
 ### Interfaces & Types
 
-- [ ] Implicit interface implementation
+- [x] Implicit interface implementation
 - [ ] Empty interface and when to avoid
-- [ ] Custom types + method sets
-- [ ] Type assertions & switches
+- [x] Custom types + method sets
+- [x] Type assertions & switches
 
 ### Collections
 
-- [ ] Slice mechanics (cap growth, append rules)
-- [ ] Maps (zero value, delete, exists check)
+- [x] Slice mechanics (cap growth, append rules)
+- [x] Maps (zero value, delete, exists check)
 - [ ] Structs & JSON tags
 
 ### Essential Stdlib
