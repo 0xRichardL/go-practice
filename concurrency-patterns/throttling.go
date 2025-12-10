@@ -15,8 +15,14 @@ func throttle(rate int, ttl time.Duration) chan time.Time {
 	go func() {
 		// refill the channel at the specified rate.
 		for range time.Tick(ttl) {
+
 			for i := 0; i < rate; i++ {
-				limiter <- time.Now()
+				// try to add a token, but don't block if the channel is full.
+				select {
+				case limiter <- time.Now():
+				default:
+					i = rate
+				}
 			}
 		}
 	}()
