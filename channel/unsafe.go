@@ -21,12 +21,12 @@ func unsafe() {
 // A very tiny chance that done signal arrives after the send operation, still may cause panic.
 func lowRisk() {
 	ch := make(chan string)
-	done := make(chan bool)
+	done := make(chan struct{})
 
 	// This goroutine will close the channel after a delay.
 	go func() {
 		time.Sleep(1 * time.Second)
-		done <- true
+		done <- struct{}{}
 		close(ch)
 	}()
 	// This goroutine will attempt to receive messages from the channel.
