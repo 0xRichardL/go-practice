@@ -28,21 +28,28 @@ func basic() {
 	fmt.Println("Value shared by interface: ", c.GetValue())
 }
 
-// Unsafe casting that may cause panic at runtime
-func unsafeCasting() {
+// Unsafe type assertion that may cause panic at runtime
+func unsafeTypeAssertion() {
 	var c Interface = &StructA{Value: 20, SpecialValue: "Special"}
 	// var c Interface = &StructB{Value: 20} // This will cause panic at runtime
-	fmt.Println("Special value after unsafe casting: ", c.(*StructA).SpecialValue)
+	fmt.Println("Special value after unsafe type assertion: ", c.(*StructA).SpecialValue)
 }
 
-// Safe casting that prevents panic at runtime
-func safeCasting() {
+// Safe type assertion that prevents panic at runtime
+func safeTypeAssertion() {
 	var c Interface = &StructA{Value: 30, SpecialValue: "Special"}
 	if v, ok := c.(*StructA); ok {
-		fmt.Println("Special value after safe casting: ", v.SpecialValue)
+		fmt.Println("Special value after safe type assertion: ", v.SpecialValue)
 	} else {
 		fmt.Println("Type assertion failed")
 	}
+}
+
+func wrongTypeAssertion() {
+	c := &StructB{Value: 40}
+	// Uncommenting the following line will cause a compile-time error:
+	// "invalid operation: c (variable of type *StructB) is not an interface"
+	// c.(*StructA)
 }
 
 // Passing interface and determining underlying type
@@ -59,8 +66,8 @@ func getTypeFromInterface(i Interface) {
 
 func main() {
 	basic()
-	unsafeCasting()
-	safeCasting()
+	unsafeTypeAssertion()
+	safeTypeAssertion()
 	getTypeFromInterface(&StructA{})
 	getTypeFromInterface(&StructB{})
 }
