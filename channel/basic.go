@@ -54,7 +54,37 @@ func multiple() {
 	}
 }
 
+func try_receive() {
+	test := func() bool {
+		ch := make(chan int)
+		// Spawn a goroutine to send a value aim for a race condition.
+		go func() {
+			ch <- 1
+		}()
+		time.Sleep(230 * time.Nanosecond) // Optimized for 50:50 chances.
+		select {
+		case <-ch:
+			return true
+		default:
+			return false
+		}
+	}
+
+	catches := 0
+	misses := 0
+	for i := 0; i < 1000; i++ {
+		res := test()
+		if res {
+			catches++
+		} else {
+			misses++
+		}
+	}
+	fmt.Printf("Catch: %d, Missed: %d\n", catches, misses)
+}
+
 func main() {
-	single()
-	multiple()
+	// single()
+	// multiple()
+	// try_receive()
 }

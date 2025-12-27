@@ -54,7 +54,7 @@ after time away.
 - [x] Worker pool
 - [x] Fan-in / Fan-out
 - [ ] Context cancellation
-- [ ] Rate limiting (ticker)
+- [x] Rate limiting (ticker)
 
 ### Sync Primitives
 
@@ -64,9 +64,9 @@ after time away.
 
 ### Mini Tasks
 
-- [ ] Build worker pool
-- [ ] API caller with rate limit
-- [ ] Write a goroutine leak + fix it
+- [x] Build worker pool
+- [x] API caller with rate limit
+- [x] Write a goroutine leak + fix it
 
 ## 📅 Day 3 --- DS, Interfaces, and Stdlib Mastery
 
@@ -81,7 +81,7 @@ after time away.
 
 - [x] Slice mechanics (cap growth, append rules)
 - [x] Maps (zero value, delete, exists check)
-- [ ] Structs & JSON tags
+- [x] Structs & JSON tags
 
 ### Essential Stdlib
 
@@ -89,9 +89,9 @@ after time away.
 - [ ] `net/http`
 - [ ] `encoding/json`
 - [ ] `io` & `bufio`
-- [ ] `os`
-- [ ] `time`
-- [ ] `errors`
+- [x] `os`
+- [x] `time`
+- [x] `errors`
 
 ### Mini Tasks
 
@@ -103,14 +103,14 @@ after time away.
 
 ### Project Structure
 
-- [ ] `cmd/`, `internal/`, `pkg/`
-- [ ] Config loading (env, JSON, YAML)
+- [x] `cmd/`, `internal/`, `pkg/`
+- [x] Config loading (env, JSON, YAML)
 
 ### Web & Middleware
 
 - [ ] Gin or Echo basics
-- [ ] Request binding & validation
-- [ ] Swagger UI
+- [x] Request binding & validation
+- [x] Swagger UI
 - [ ] Custom middleware (auth/logging/recovery)
 
 ### Database & Persistence
@@ -124,8 +124,8 @@ after time away.
 - [ ] Table-driven tests
 - [ ] Mocks (GoMock or custom doubles)
 - [ ] Benchmarks
-- [ ] `golangci-lint`
-- [ ] `go mod tidy`, replace directive
+- [x] `golangci-lint`
+- [x] `go mod tidy`, replace directive
 
 ### Mini Project --- Build a Microservice
 

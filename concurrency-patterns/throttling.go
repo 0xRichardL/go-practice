@@ -5,23 +5,23 @@ import (
 	"time"
 )
 
-func throttle(rate int, ttl time.Duration) chan time.Time {
-	// the limiter use a full buffered channel to hold tokens.
-	limiter := make(chan time.Time, rate)
+func throttle(rate int, ttl time.Duration) chan struct{} {
+	// the limiter use a full buffered channel to hold tokens. use struct{} to save memory (zero bytes).
+	limiter := make(chan struct{}, rate)
 	// fill the channel to capacity.
 	for i := 0; i < rate; i++ {
-		limiter <- time.Now()
+		limiter <- struct{}{}
 	}
 	go func() {
 		// refill the channel at the specified rate.
 		for range time.Tick(ttl) {
 
-			for i := 0; i < rate; i++ {
-				// try to add a token, but don't block if the channel is full.
+			for true {
+				// try to fill up the limiter bucket, but don't block if the channel is full.
 				select {
-				case limiter <- time.Now():
+				case limiter <- struct{}{}:
 				default:
-					i = rate
+					break
 				}
 			}
 		}
