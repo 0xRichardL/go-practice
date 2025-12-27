@@ -18,9 +18,7 @@ func main() {
 }
 
 func modifyElements(s []int) {
-	if len(s) > 0 {
-		s[0] = 99 // Modifies original slice
-	}
+	s[0] = 99 // Modifies original slice
 }
 
 func appendElement(s []int) {
