@@ -16,18 +16,18 @@ A comprehensive, level-based checklist to master Go from basics to expert patter
 
 ### Pointers & Memory
 
-- [ ] Pointer basics (`&`, `*`)
-- [ ] Pointer vs value semantics
-- [ ] Nil pointers
-- [ ] Pointer arithmetic (not allowed in Go)
+- [x] Pointer basics (`&`, `*`)
+- [x] Pointer vs value semantics
+- [x] Nil pointers
+- [x] Pointer arithmetic (not allowed in Go)
 
 ### Structs
 
-- [ ] Struct declaration and initialization
-- [ ] Field access and modification
-- [ ] Anonymous structs
-- [ ] Struct literals
-- [ ] Comparing structs
+- [x] Struct declaration and initialization
+- [x] Field access and modification
+- [x] Anonymous structs
+- [x] Struct literals
+- [x] Comparing structs
 
 ### Control Flow
 
