@@ -59,15 +59,15 @@ A comprehensive, level-based checklist to master Go from basics to expert patter
 ### Formatting & Output
 
 - [x] `fmt.Print`, `Println`, `Printf`
-- [ ] `fmt.Sprintf` for string formatting
-- [ ] Format verbs (`%v`, `%+v`, `%#v`, `%T`, `%d`, `%s`, `%f`)
-- [ ] Width and precision in formatting
+- [x] `fmt.Sprintf` for string formatting
+- [x] Format verbs (`%v`, `%+v`, `%#v`, `%T`, `%d`, `%s`, `%f`)
+- [x] Width and precision in formatting
 
 ### Command-Line Basics
 
-- [ ] `os.Args` for command-line arguments
+- [x] `os.Args` for command-line arguments
 - [ ] `flag` package for parsing flags
-- [ ] Exit codes with `os.Exit()`
+- [x] Exit codes with `os.Exit()`
 
 ### Mini Projects
 
@@ -111,8 +111,8 @@ A comprehensive, level-based checklist to master Go from basics to expert patter
 - [x] String immutability
 - [x] String vs `[]byte` vs `[]rune`
 - [x] `strings` package
-- [ ] `strconv` package (Atoi, ParseInt, FormatInt, ParseFloat)
-- [ ] String conversions and parsing
+- [x] `strconv` package (Atoi, ParseInt, FormatInt, ParseFloat)
+- [x] String conversions and parsing
 - [ ] Regular expressions (`regexp` package)
 - [ ] Compile vs MustCompile
 - [ ] Match, Find, Replace patterns
