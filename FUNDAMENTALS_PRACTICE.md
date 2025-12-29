@@ -112,10 +112,10 @@ A comprehensive, level-based checklist to master Go from basics to expert patter
 - [x] String vs `[]byte` vs `[]rune`
 - [x] `strings` package
 - [x] `strconv` package (Atoi, ParseInt, FormatInt, ParseFloat)
-- [x] String conversions and parsing
-- [ ] Regular expressions (`regexp` package)
-- [ ] Compile vs MustCompile
-- [ ] Match, Find, Replace patterns
+  - [x] String conversions and parsing
+- [x] Regular expressions (`regexp` package)
+  - [x] Compile vs MustCompile
+  - [x] Match, Find, Replace patterns
 
 ### Error Handling Advanced
 
@@ -128,15 +128,15 @@ A comprehensive, level-based checklist to master Go from basics to expert patter
 - [x] Custom types
 - [x] Type definitions vs type aliases
 - [x] Method sets
-- [ ] Methods on custom types (value vs pointer receivers)
-- [ ] When to use pointer vs value receivers
-- [ ] Method set implications for interfaces
+- [x] Methods on custom types (value vs pointer receivers)
+- [x] When to use pointer vs value receivers
+- [x] Method set implications for interfaces
 - [x] Interface basics
 - [x] Implicit interface satisfaction
 - [x] Type assertions (safe & unsafe)
 - [x] Type switches
-- [ ] Empty interface (`interface{}` / `any`)
-- [ ] Type assertion on empty interface
+- [x] Empty interface (`interface{}` / `any`)
+- [x] Type assertion on empty interface
 
 ### Struct Composition
 
@@ -151,7 +151,7 @@ A comprehensive, level-based checklist to master Go from basics to expert patter
 - [x] `fmt` package (Print, Printf, Println)
 - [x] `os` package basics
 - [x] File operations
-- [ ] `io.Reader` and `io.Writer` interfaces
+- [x] `io.Reader` and `io.Writer` interfaces
 - [ ] `io.Copy`, `io.ReadAll`, `io.ReadFull`
 - [ ] Implementing custom Reader/Writer
 - [ ] `bufio` package (Scanner, Reader, Writer)
@@ -373,11 +373,11 @@ A comprehensive, level-based checklist to master Go from basics to expert patter
 - [ ] `comparable` constraint
 - [ ] `any` constraint
 - [ ] Reflection (`reflect` package)
-- [ ] `reflect.TypeOf` and `reflect.ValueOf`
+  - [ ] `reflect.TypeOf` and `reflect.ValueOf`
 - [ ] Inspecting struct fields and tags
 - [ ] Unsafe pointer operations (`unsafe` package)
-- [ ] Pointer arithmetic with unsafe
-- [ ] `unsafe.Sizeof`, `unsafe.Alignof`, `unsafe.Offsetof`
+  - [ ] Pointer arithmetic with unsafe
+  - [ ] `unsafe.Sizeof`, `unsafe.Alignof`, `unsafe.Offsetof`
 - [ ] Struct embedding (composition)
 - [ ] Interface embedding
 - [ ] Build constraints (`//go:build`)
