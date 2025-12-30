@@ -152,19 +152,19 @@ A comprehensive, level-based checklist to master Go from basics to expert patter
 - [x] `os` package basics
 - [x] File operations
 - [x] `io.Reader` and `io.Writer` interfaces
-- [ ] `io.Copy`, `io.ReadAll`, `io.ReadFull`
-- [ ] Implementing custom Reader/Writer
-- [ ] `bufio` package (Scanner, Reader, Writer)
-- [ ] Buffered I/O performance benefits
-- [ ] Reading line by line with Scanner
+- [x] `io.Copy`, `io.ReadAll`, `io.ReadFull`
+- [x] Implementing custom Reader/Writer
+- [x] `bufio` package (Scanner, Reader, Writer)
+- [x] Buffered I/O performance benefits
+- [x] Reading line by line with Scanner
 
 ### JSON & Serialization
 
-- [ ] Struct tags for JSON (`json:"field_name"`)
-- [ ] `json.Marshal` and `json.Unmarshal`
-- [ ] Handling nested structs
-- [ ] Omitempty and string options
-- [ ] Custom JSON marshaling (`MarshalJSON`, `UnmarshalJSON`)
+- [x] Struct tags for JSON (`json:"field_name"`)
+- [x] `json.Marshal` and `json.Unmarshal`
+- [x] Handling nested structs
+- [x] Omitempty and string options
+- [x] Custom JSON marshaling (`MarshalJSON`, `UnmarshalJSON`)
 
 ### Mini Projects
 
