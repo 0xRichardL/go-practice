@@ -1,11 +1,12 @@
 module go-playground
 
-go 1.19
+go 1.24.0
 
 require (
 	github.com/stretchr/testify v1.6.1
 	github.com/y-bash/go-gaga v0.0.2
 	go.mongodb.org/mongo-driver v1.7.3
+	golang.org/x/exp v0.0.0-20251219203646-944ab1f22d93
 	golang.org/x/text v0.3.5
 )
 
