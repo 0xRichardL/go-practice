@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// 4ms Beats 69.09%
 func convert(s string, numRows int) string {
 	if numRows == 1 {
 		return s
