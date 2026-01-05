@@ -34,31 +34,31 @@ type (
 func (s Service) LookupProfile(ctx context.Context, targetUserID, viewerID string) (*Profile, error) {
 	// get, notif
 	wg := sync.WaitGroup{}
-	resCh := make(chan *Profile, 1)
+	var profile *Profile
+	// Errors are from 2 channels, buffer size 1 to avoid goroutine leak.
+	// Return first error.
 	errCh := make(chan error, 1)
 
-	wg.Add(2)
-	go func() {
-		s.notiClient.Notify(ctx, targetUserID, viewerID)
-		wg.Done()
+	wg.Add(1)
+	func() {
+		defer wg.Done()
+		if err := s.notiClient.Notify(ctx, targetUserID, viewerID); err != nil {
+			errCh <- err
+		}
 	}()
-	go func(resCh chan *Profile, errCh chan error) {
+	// Go ^1.25, use wg.Go func
+	wg.Go(func() {
 		user, err := s.repo.Get(ctx, targetUserID)
 		if err != nil {
 			errCh <- err
 			return
 		}
-		profile := &Profile{
+		profile = &Profile{
 			ID:   user.ID,
 			Name: user.Name,
 		}
-		resCh <- profile
-		wg.Done()
-	}(resCh, errCh)
+	},
+	)
 	wg.Wait()
-	return <-resCh, <-errCh
-}
-
-func main() {
-
+	return profile, <-errCh
 }
