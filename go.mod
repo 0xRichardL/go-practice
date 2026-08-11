@@ -1,4 +1,4 @@
-module go-playground
+module github.com/0xRichardL/go-practice
 
 go 1.25.0
 
