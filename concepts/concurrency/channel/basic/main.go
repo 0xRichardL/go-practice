@@ -56,7 +56,7 @@ func multiple() {
 
 func try_receive() {
 	test := func() bool {
-		ch := make(chan int)
+		ch := make(chan int, 1)
 		// Spawn a goroutine to send a value aim for a race condition.
 		go func() {
 			ch <- 1
@@ -72,7 +72,7 @@ func try_receive() {
 
 	catches := 0
 	misses := 0
-	for i := 0; i < 1000; i++ {
+	for range 1000 {
 		res := test()
 		if res {
 			catches++
@@ -86,5 +86,5 @@ func try_receive() {
 func main() {
 	// single()
 	// multiple()
-	// try_receive()
+	try_receive()
 }

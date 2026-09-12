@@ -2,43 +2,62 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
-func throttle(rate int, ttl time.Duration) chan struct{} {
-	// the limiter use a full buffered channel to hold tokens. use struct{} to save memory (zero bytes).
+func throttle(rate int, ttl time.Duration) (<-chan struct{}, func()) {
+	// Use a buffered channel as a token bucket. struct{} carries no data.
 	limiter := make(chan struct{}, rate)
-	// fill the channel to capacity.
-	for i := 0; i < rate; i++ {
+	// Start with a full bucket, allowing an initial burst of up to rate operations.
+	for range rate {
 		limiter <- struct{}{}
 	}
-	go func() {
-		// refill the channel at the specified rate.
-		for range time.Tick(ttl) {
 
-			for true {
-				// try to fill up the limiter bucket, but don't block if the channel is full.
-				select {
-				case limiter <- struct{}{}:
-				default:
-					break
+	done := make(chan struct{})
+	var cancelOnce sync.Once
+	cancel := func() {
+		cancelOnce.Do(func() {
+			close(done)
+		})
+	}
+
+	go func() {
+		ticker := time.NewTicker(ttl)
+		defer ticker.Stop()
+		// Refill the bucket to capacity at each interval.
+		for {
+			// Wait for cancellation or the next refill interval.
+			select {
+			case <-done:
+				return
+
+			case <-ticker.C:
+			refill:
+				for {
+					// Add tokens until the bucket is full without blocking.
+					select {
+					case limiter <- struct{}{}:
+					default:
+						break refill
+					}
 				}
 			}
 		}
 	}()
 
-	return limiter
+	return limiter, cancel
 }
 
 func main() {
-	// Allow 5 requests per second
-	limit := throttle(5, 1*time.Second)
-
-	for i := 0; i < 20; i++ {
-		<-limit // take token: blocks if rate exceeded
-		if i == 3 || i == 13 || i == 17 {
-			time.Sleep(3 * time.Second) // simulate a pause in requests
-		}
+	// Allow bursts of up to five requests and refill the bucket every second.
+	limit, cancel := throttle(5, 1*time.Second)
+	defer cancel()
+	for i := range 20 {
+		<-limit // Consume one token, blocking while the bucket is empty.
 		fmt.Println("Request", i, "at", time.Now().Format("15:04:05.000"))
+		if i == 3 || i == 13 || i == 17 {
+			time.Sleep(3 * time.Second) // Simulate idle time, allowing the bucket to refill.
+		}
 	}
 }
